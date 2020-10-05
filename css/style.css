@@ -1,3 +1,18 @@
-* {
+/* body {
     background-color: blue;
+} */
+header {
+    color: silver;
+}
+.list-group {
+    background-color: chartreuse;
+    padding: 25px;
+}
+.hourly {
+    background-color: blue;
+    padding: 50px;
+}
+.sevenDay {
+    background-color: silver;
+    padding: 50px;
 }
