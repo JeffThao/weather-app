@@ -30,62 +30,59 @@ $(document).ready(function () {
 
 
   var apiKey = "dd68b4014d2e771287d9ab99ce0ac633";
- 
-  
-  function fiveDay(city){
-    // 5 day api.openweathermap.org/data/2.5/forecast?q={city name}&appid={API key}
-  
-  
-  var url= "https://api.openweathermap.org/data/2.5/forecast?q="+city+"&appid="+apiKey;
-  console.log(url)
-  $.ajax({
-    url: url,
-    method: "GET"
-  }).then(function(response) {
-    for(var i=0;i<5;i++)
-    {
-    console.log(response.list[i*8].main.temp)
-    console.log(moment(response.list[i*8].dt_txt).format("LLL"))
-    }
-   
 
-    
-  });
 
-  //3. get all your data, cityname, lon lat, temp hum, wind
-  //4. dynamically append everything together
-  //update this into a forloop
+  function fiveDay(city) {
+
+    var url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
+    console.log(url)
+    $.ajax({
+      url: url,
+      method: "GET"
+    }).then(function (response) {
+      for (var i = 0; i < 5; i++) {
+        console.log(response.list[i * 8].main.temp)
+        console.log(moment(response.list[i * 8].dt_txt).format("lll"))
+      }
+
+
+
+    });
+
+    //3. get all your data, cityname, lon lat, temp hum, wind
+    //4. dynamically append everything together
+    //update this into a forloop
     //run a for loop and mult i*8 =24hrs
-  
-  }
-
-  function oneday(city){
-     //One day api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-     var onedayurl= "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
-     console.log(onedayurl)
-     $.ajax({
-      url: onedayurl,
-      method: "GET"
-    }).then(function(response) {
-     var lon = response.coord.lon;
-     var lat = response.coord.lat;
-       //lon and lat => uv (another ajax request) 
-     var uvUrl="http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
-     console.log(uvUrl)
-     $.ajax({
-      url: uvUrl,
-      method: "GET"
-    }).then(function(uvObj) {
-      console.log(uvObj.value)
-     
-     
-  
-    });
-     
-    
-    });
 
   }
 
-  oneday("Reno");
+  function oneDay(city) {
+    //One day api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+    var oneDayUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
+    console.log(oneDayUrl)
+    $.ajax({
+      url: oneDayUrl,
+      method: "GET"
+    }).then(function (lonAndLat) {
+      var lon = lonAndLat.coord.lon;
+      var lat = lonAndLat.coord.lat;
+      //lon and lat => uv (another ajax request) 
+      var uvUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+      console.log(uvUrl)
+      $.ajax({
+        url: uvUrl,
+        method: "GET"
+      }).then(function (uvObj) {
+        console.log(uvObj.value)
+
+
+
+      });
+
+
+    });
+
+  }
+
+  oneDay("Reno");
 });
