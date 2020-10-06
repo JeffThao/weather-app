@@ -8,11 +8,11 @@ header {
     background-color: chartreuse;
     padding: 25px;
 }
-.hourly {
+#hourly {
     background-color: blue;
     padding: 50px;
 }
-.sevenDay {
+#fiveDayWeather {
     background-color: silver;
     padding: 50px;
 }

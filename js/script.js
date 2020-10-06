@@ -6,19 +6,23 @@ console.log("hello");
 <div class="container">
   <div class="row">
    <div class="list-group">
-    <a href="#" class="list-group-item list-group-item-action"> Cras justo odio
+
+    <a href="#" class="city list-group-item list-group-item-action"> Cras justo odio
     </a>
-    <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-    <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-    <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-    <a href="#" class="list-group-item list-group-item-action">Vestibulum at eros</a>
+    <a href="#" class="city list-group-item list-group-item-action">Dapibus ac facilisis in</a>
+    <a href="#" class="city list-group-item list-group-item-action">Morbi leo risus</a>
+    <a href="#" class="city list-group-item list-group-item-action">Porta ac consectetur ac</a>
+    <a href="#" class="city list-group-item list-group-item-action">Vestibulum at eros</a>
+
     </div>
+
     <div class="col-sm-10">
       <div class="col-12 hourly"></div>
       <div class="col-12 sevenDay"></div>
     </div>
   </div>
 </div>
+
 2. Create a div to show searched city, should be on R side.
 3. Create another div to should 5 day weather for searched city.
 4. 
@@ -31,35 +35,11 @@ $(document).ready(function () {
 
   var apiKey = "dd68b4014d2e771287d9ab99ce0ac633";
 
-
-  function fiveDay(city) {
-
-    var url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
-    console.log(url)
-    $.ajax({
-      url: url,
-      method: "GET"
-    }).then(function (response) {
-      for (var i = 0; i < 5; i++) {
-        console.log(response.list[i * 8].main.temp)
-        console.log(moment(response.list[i * 8].dt_txt).format("lll"))
-      }
-
-
-
-    });
-
-    //3. get all your data, cityname, lon lat, temp hum, wind
-    //4. dynamically append everything together
-    //update this into a forloop
-    //run a for loop and mult i*8 =24hrs
-
-  }
-
   function oneDay(city) {
     //One day api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
     var oneDayUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
     console.log(oneDayUrl)
+
     $.ajax({
       url: oneDayUrl,
       method: "GET"
@@ -75,6 +55,9 @@ $(document).ready(function () {
       }).then(function (uvObj) {
         console.log(uvObj.value)
 
+        $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+        $(".wind").text("Wind Speed: " + response.wind.speed);
+        $(".humidity").text("Humidity: " + response.main.humidity);
 
 
       });
@@ -84,5 +67,37 @@ $(document).ready(function () {
 
   }
 
-  oneDay("Reno");
+  function fiveDay(city) {
+
+    var url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
+    console.log(url);
+    $.ajax({
+      url: url,
+      method: "GET"
+    }).then(function (response) {
+      for (var i = 0; i < 5; i++) {
+
+        var fiveDayDiv = $("#fiveDayWeather");
+        var fiveDayForecast = $("<div>");
+        
+        console.log(fiveDayDiv);
+
+        console.log(response.list[i * 8].main.temp)
+        console.log(moment(response.list[i * 8].dt_txt).format("lll"))
+      }
+
+
+
+    });
+
+    //3. get all your data, cityname, lon lat, temp hum, wind
+    //4. dynamically append everything together
+    //update this into a forloop
+    //run a for loop and mult i*8 =24hrs
+
+  }
+
+
+
+  fiveDay("Reno");
 });
