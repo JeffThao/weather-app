@@ -11,10 +11,10 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/4439e3b362.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="./css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://kit.fontawesome.com/4439e3b362.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./css/style.css">
     <script src="./js/script.js"></script>
 </head>
 
@@ -27,28 +27,19 @@
             <div class="list-group col-sm-3">
                 <div class="input-group mb-3">
                     <form id="searchArea">
-                        <input type="text" class="form-control" id="searchBar" placeholder="Search for a city" aria-label="Search  Bar" aria-describedby="basic-addon2">
+                        <input id="searchBar" type="text" class="form-control" placeholder="Search for a city" aria-label="Search  Bar">
                         <input id="searchBtn" type="submit" value="Search">
                     </form>
                     <div class="col-12" id="oldSearch">
-                        <!-- <button class="btn btn-light">hello</button>
-                        <button class="btn btn-light">hello</button> -->
                     </div>
                 </div>
             </div>
             <div class="col-sm-9">
                 <div class="row" id="current">
-                    <div class="col-12">Date</div>
-                    <div class="col-12">Weather</div>
-                    <div class="col-12">Wind</div>
-                    <div class="col-12">UV</div>
+
                 </div>
                 <div class="row" id="fiveDayWeather">
-                    <div class="col-sm-2 weather"></div>
-                    <div class="col-sm-2 weather"></div>
-                    <div class="col-sm-2 weather"></div>
-                    <div class="col-sm-2 weather"></div>
-                    <div class="col-sm-2 weather"></div>
+
                 </div>
             </div>
         </div>
