@@ -1,18 +1,26 @@
-/* body {
-    background-color: blue;
-} */
+body {
+    background-color: silver;
+}
+
 header {
     color: silver;
 }
+
 .list-group {
-    background-color: chartreuse;
+    background-color: grey;
     padding: 25px;
 }
-#hourly {
-    background-color: blue;
+
+#current {
+    background-color: lightslategrey;
     padding: 50px;
 }
+
 #fiveDayWeather {
-    background-color: silver;
+    background-color: lightslategrey;
     padding: 50px;
+}
+
+.weather {
+    padding: 25px;
 }

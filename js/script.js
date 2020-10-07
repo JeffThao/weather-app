@@ -1,103 +1,175 @@
-console.log("hello");
 /*
 1. Create divs for search bar and lists, these lists should be active. Once clicked they will be shown on the weather.
-    Search bar and list items should be on the L side, when screen is small, it will collapse
-    List items only hold 5 cities that users can click on to go back to that city
+
 <div class="container">
   <div class="row">
-   <div class="list-group">
-
-    <a href="#" class="city list-group-item list-group-item-action"> Cras justo odio
-    </a>
-    <a href="#" class="city list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-    <a href="#" class="city list-group-item list-group-item-action">Morbi leo risus</a>
-    <a href="#" class="city list-group-item list-group-item-action">Porta ac consectetur ac</a>
-    <a href="#" class="city list-group-item list-group-item-action">Vestibulum at eros</a>
-
-    </div>
-
-    <div class="col-sm-10">
-      <div class="col-12 hourly"></div>
-      <div class="col-12 sevenDay"></div>
-    </div>
+      <div class="list-group col-sm-3">
+        <div class="input-group mb-3">
+          <form id="searchArea">
+            <input type="text" class="form-control" id="searchBar" placeholder="Search for a city" aria-label="Search Bar" aria-describedby="basic-addon2">
+            <input id="searchBtn" type="submit" value="Search">
+          </form>
+          <div class="col-12" id="oldSearch">
+              <button class="btn btn-light">hello</button>
+              <button class="btn btn-light">hello</button>
+              <button class="btn btn-light">hello</button>
+              <button class="btn btn-light">hello</button>
+              <button class="btn btn-light">hello</button>
+          </div>
+        </div>
+      </div>
+        <div class="col-sm-9">
+          <div class="row" id="current">
+            <div class="col-12">Date</div>
+            <div class="col-12">Weather</div>
+            <div class="col-12">Wind</div>
+            <div class="col-12">UV</div>
+          </div>
+          <div class="row" id="fiveDayWeather">
+            <div class="col-sm-2 weather"></div>
+            <div class="col-sm-2 weather"></div>
+            <div class="col-sm-2 weather"></div>
+            <div class="col-sm-2 weather"></div>
+            <div class="col-sm-2 weather"></div>
+          </div>
+      </div>
   </div>
 </div>
 
-2. Create a div to show searched city, should be on R side.
-3. Create another div to should 5 day weather for searched city.
-4. 
-
+3. Create another div to hold 5 day weather for searched city.
 
 */
 
-$(document).ready(function () {
+$(document).ready(function() {
+
+    var apiKey = "dd68b4014d2e771287d9ab99ce0ac633";
+
+    var searchBar = $("#searchBar").value.trim();
+
+    function oneDay(city) {
+        //One day api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+        var oneDayUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
 
 
-  var apiKey = "dd68b4014d2e771287d9ab99ce0ac633";
+        $.ajax({
+            url: oneDayUrl,
+            method: "GET"
 
-  function oneDay(city) {
-    //One day api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-    var oneDayUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey;
-    console.log(oneDayUrl)
+        }).then(function(weartherConditions) {
 
-    $.ajax({
-      url: oneDayUrl,
-      method: "GET"
-    }).then(function (lonAndLat) {
-      var lon = lonAndLat.coord.lon;
-      var lat = lonAndLat.coord.lat;
-      //lon and lat => uv (another ajax request) 
-      var uvUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
-      console.log(uvUrl)
-      $.ajax({
-        url: uvUrl,
-        method: "GET"
-      }).then(function (uvObj) {
-        console.log(uvObj.value)
+            // var currentCity = ;
 
-        $(".city").html("<h1>" + response.name + " Weather Details</h1>");
-        $(".wind").text("Wind Speed: " + response.wind.speed);
-        $(".humidity").text("Humidity: " + response.main.humidity);
+            $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+            $(".wind").text("Wind Speed: " + response.wind.speed);
+            $(".humidity").text("Humidity: " + response.main.humidity);
 
+            // Convert the temp to fahrenheit
+            var tempF = (response.main.temp - 273.15) * 1.80 + 32;
 
-      });
+        });
 
+        $("#searchBtn").on("click", function(event) {
 
-    });
+            event.preventDefault();
 
-  }
+            if (searchBar != null) {
+                var lastCity = $("<button class='btn btn-light city></button>");
+                astCity.attr("id", searchBar);
 
-  function fiveDay(city) {
+                lastCity.textContent = searchBar.val();
 
-    var url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
-    console.log(url);
-    $.ajax({
-      url: url,
-      method: "GET"
-    }).then(function (response) {
-      for (var i = 0; i < 5; i++) {
+                $("#oldSearch").append(searchBar);
+            } else {
+                alert("Please type in a city name");
+            }
 
-        var fiveDayDiv = $("#fiveDayWeather");
-        var fiveDayForecast = $("<div>");
-        
-        console.log(fiveDayDiv);
-
-        console.log(response.list[i * 8].main.temp)
-        console.log(moment(response.list[i * 8].dt_txt).format("lll"))
-      }
+            // This line will grab the text from the input box
 
 
+            searchedCity.push(searchedCity);
 
-    });
+            oneDay();
 
-    //3. get all your data, cityname, lon lat, temp hum, wind
-    //4. dynamically append everything together
-    //update this into a forloop
-    //run a for loop and mult i*8 =24hrs
+        });
 
-  }
+        $.ajax({
+            url: oneDayUrl,
+            method: "GET"
+
+        }).then(function(lonAndLat) {
+
+            var lon = lonAndLat.coord.lon;
+
+            var lat = lonAndLat.coord.lat;
+
+            //lon and lat => uv (another ajax request) 
+            var uvUrl = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&appid=" + apiKey;
+            console.log(uvUrl)
+
+            $.ajax({
+                url: uvUrl,
+                method: "GET"
+            }).then(function(uvObj) {
+
+                console.log(uvObj.value)
+
+
+                // $(".city").html("<h1>" + response.name + " Weather Details</h1>");
+                // $(".wind").text("Wind Speed: " + response.wind.speed);
+                // $(".humidity").text("Humidity: " + response.main.humidity);
+
+                // Convert the temp to fahrenheit
+                // var tempF = (response.main.temp - 273.15) * 1.80 + 32;
+
+            });
+
+
+        });
+
+    }
+
+    function fiveDay(city) {
+
+        var url = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + apiKey;
+        console.log(url);
+
+        $.ajax({
+            url: url,
+            method: "GET"
+        }).then(function(response) {
+
+            for (var i = 0; i < 5; i++) {
+
+                var fiveDayDiv = $("#fiveDayWeather");
+
+                var fiveDayForecast = $("<div>");
+
+                fiveDayForecast.setAttribute("class", "col-sm-2 weather");
+
+                fiveDayForecast.setAttribute("id", "weather" + i);
+
+                fiveDayForecast.textContent = moment(response.list[i * 8].dt_txt).format("lll");
+
+                fiveDayDiv.append(fiveDayForecast);
 
 
 
-  fiveDay("Reno");
+
+                console.log(response.list[i * 8].main.temp);
+
+                console.log(moment(response.list[i * 8].dt_txt).format("lll"));
+
+            }
+
+        });
+
+        //3. get all your data, cityname, lon lat, temp hum, wind
+        //4. dynamically append everything together
+        //update this into a forloop
+        //run a for loop and mult i*8 =24hrs
+
+    }
+
+
+    oneDay("Reno");
 });
